@@ -21,7 +21,7 @@ export const Login = ({ onClose }) => {
 		<Modal open={isLoginOpen} onClose={onClose}>
 			<div className="center">
 				<section className="login">
-					<h2 className="text-light">Welcome Back!</h2>
+					<h2 className="text-light">Login to save your column order!</h2>
 					<div className="login login__container">
 						<form ref={form} onSubmit={login}>
 							<input type="email" name="email" placeholder="Email" required />

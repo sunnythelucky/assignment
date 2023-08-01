@@ -1,14 +1,15 @@
 import React, { useContext, useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { data } from "../api/CreateUserAPI";
-import { UserData } from "../types";
+import { User } from "../types";
 import { Button } from "@mui/material";
 import { Login } from "./Login/Login";
 import { LoginContext } from "../context/LoginProvider";
-import { AsyncLocalStorage } from "async_hooks";
+import { SortingState } from "@tanstack/react-table";
 
 const Table = () => {
 	const [isSaved, setISSaved] = useState(false);
+	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnOrder, setColumnOrder] = useState([
 		"firstName",
 		"lastName",
@@ -28,7 +29,7 @@ const Table = () => {
 		isLoggedIn: boolean;
 		setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 	} = useContext(LoginContext);
-	const columns = useMemo<MRT_ColumnDef<UserData>[]>(
+	const columns = useMemo<MRT_ColumnDef<User>[]>(
 		() => [
 			{
 				accessorKey: "firstName",
@@ -56,6 +57,11 @@ const Table = () => {
 				Cell: ({ row }) => {
 					return `${row.original.firstName} ${row.original.lastName}`;
 				},
+				sortingFn: (rowA, rowB, columnId) => {
+					const fullNameA = `${rowA.original.firstName} ${rowA.original.lastName}`;
+					const fullNameB = `${rowB.original.firstName} ${rowB.original.lastName}`;
+					return fullNameA.localeCompare(fullNameB);
+				},
 			},
 			{
 				accessorKey: "dsr",
@@ -67,7 +73,15 @@ const Table = () => {
 					const diffDays = Math.round(Math.abs((today.getTime() - registeredDate.getTime()) / oneDay));
 					return diffDays;
 				},
-				sortingFn: (a, b) => (a.original.registeredDate > b.original.registeredDate ? 1 : -1),
+				sortingFn: (rowA, rowB, columnId) => {
+					const oneDay = 24 * 60 * 60 * 1000;
+					const today = new Date();
+					const registeredDateA = new Date(rowA.original.registeredDate);
+					const registeredDateB = new Date(rowB.original.registeredDate);
+					const diffDaysA = Math.round(Math.abs((today.getTime() - registeredDateA.getTime()) / oneDay));
+					const diffDaysB = Math.round(Math.abs((today.getTime() - registeredDateB.getTime()) / oneDay));
+					return diffDaysA - diffDaysB;
+				},
 			},
 		],
 		[]

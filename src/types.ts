@@ -5,9 +5,6 @@ export type User = {
 	id: string;
 	city: string;
 	registeredDate: string;
-};
-
-export interface UserData extends User {
 	fullName?: string;
-	dsr?: string;
-}
+	dsr?: number;
+};

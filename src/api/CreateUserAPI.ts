@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { UserData } from "../types";
+import { User } from "../types";
 
-const createUser = (): UserData => {
+const createUser = (): User => {
 	const firstName = faker.person.firstName();
 	const lastName = faker.person.lastName();
 	const city = faker.location.city();
