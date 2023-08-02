@@ -21,13 +21,6 @@ export const Login = ({ onClose }) => {
 			setError(error.response.data.message);
 		}
 	};
-	const formik = useFormik({
-		initialValues: {
-			username: "",
-			password: "",
-		},
-		onSubmit,
-	});
 
 	return (
 		<Modal open={isLoginOpen} onClose={onClose}>
