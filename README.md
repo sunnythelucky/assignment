@@ -8,8 +8,8 @@ Material React Table was used for this project considering it's built-in functio
 
 ### Features
 
-1. It displays 500 users data from [faker](https://fakerjs.dev).
-2. User can click and drag any column to change the column order.
+1. Display 500+ users data using [fakerAPI](https://fakerjs.dev).
+2. Click and drag any column to change the column order.
 3. Sort functionality for each column (client-side sorting)
 4. Pagination for the table is available.
 
