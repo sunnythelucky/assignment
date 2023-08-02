@@ -1,15 +1,19 @@
 import React, { useContext, useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
-import { data } from "../api/CreateUserAPI";
-import { User } from "../types";
+
 import { Button } from "@mui/material";
+
+import { data } from "../api/CreateUserAPI";
+import { User } from "../utils/types";
+import { sortingDate } from "../utils/sort";
+
 import { Login } from "./Login/Login";
 import { LoginContext } from "../context/LoginProvider";
-import { SortingState } from "@tanstack/react-table";
+import LoginButton from "./Login/LoginButton";
 
 const Table = () => {
 	const [isSaved, setISSaved] = useState(false);
-	const [sorting, setSorting] = useState<SortingState>([]);
+	const [token, setToken] = useState();
 	const [columnOrder, setColumnOrder] = useState([
 		"firstName",
 		"lastName",
@@ -22,13 +26,12 @@ const Table = () => {
 
 	const {
 		setIsLoginOpen,
-		isLoggedIn,
-		setIsLoggedIn,
 	}: {
 		setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>;
 		isLoggedIn: boolean;
 		setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 	} = useContext(LoginContext);
+
 	const columns = useMemo<MRT_ColumnDef<User>[]>(
 		() => [
 			{
@@ -50,6 +53,7 @@ const Table = () => {
 			{
 				accessorKey: "registeredDate",
 				header: "Registered Date",
+				sortingFn: sortingDate,
 			},
 			{
 				accessorKey: "fullName",
@@ -73,24 +77,11 @@ const Table = () => {
 					const diffDays = Math.round(Math.abs((today.getTime() - registeredDate.getTime()) / oneDay));
 					return diffDays;
 				},
-				sortingFn: (rowA, rowB, columnId) => {
-					const oneDay = 24 * 60 * 60 * 1000;
-					const today = new Date();
-					const registeredDateA = new Date(rowA.original.registeredDate);
-					const registeredDateB = new Date(rowB.original.registeredDate);
-					const diffDaysA = Math.round(Math.abs((today.getTime() - registeredDateA.getTime()) / oneDay));
-					const diffDaysB = Math.round(Math.abs((today.getTime() - registeredDateB.getTime()) / oneDay));
-					return diffDaysA - diffDaysB;
-				},
+				sortingFn: sortingDate,
 			},
 		],
 		[]
 	);
-
-	const logout = () => {
-		setIsLoggedIn(false);
-		localStorage.removeItem("isLoggedIn");
-	};
 
 	return (
 		<>
@@ -110,11 +101,7 @@ const Table = () => {
 				enableSorting={true}
 				renderTopToolbarCustomActions={({ table }) => (
 					<>
-						{isLoggedIn ? (
-							<Button onClick={logout}>Logout</Button>
-						) : (
-							<Button onClick={() => setIsLoginOpen(true)}>Login</Button>
-						)}
+						<LoginButton />
 						<Button
 							onClick={() => {
 								table.resetColumnOrder(false);
