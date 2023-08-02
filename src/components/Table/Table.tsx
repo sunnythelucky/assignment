@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 import { data } from "../../api/CreateUserAPI";
 import { User } from "../../utils/types";
-import { sortingDate } from "../../utils/sort";
+import { sortingDate, getDiffInDays } from "../../utils/sort";
 
 import { Login } from "../Login/Login";
 import { LoginContext } from "../../context/LoginProvider";
@@ -13,16 +13,7 @@ import LoginButton from "../Login/LoginButton";
 
 const Table = () => {
 	const [isSaved, setISSaved] = useState(false);
-	const [columnOrder, setColumnOrder] = useState([
-		"firstName",
-		"lastName",
-		"city",
-		"email",
-		"registeredDate",
-		"fullName",
-		"dsr",
-	]);
-	r3;
+	const [, setColumnOrder] = useState(["firstName", "lastName", "city", "email", "registeredDate", "fullName", "dsr"]);
 	const {
 		setIsLoginOpen,
 		isLoggedIn,
@@ -61,7 +52,7 @@ const Table = () => {
 				Cell: ({ row }) => {
 					return `${row.original.firstName} ${row.original.lastName}`;
 				},
-				sortingFn: (rowA, rowB, columnId) => {
+				sortingFn: (rowA, rowB) => {
 					const fullNameA = `${rowA.original.firstName} ${rowA.original.lastName}`;
 					const fullNameB = `${rowB.original.firstName} ${rowB.original.lastName}`;
 					return fullNameA.localeCompare(fullNameB);
@@ -71,11 +62,9 @@ const Table = () => {
 				accessorKey: "dsr",
 				header: "Days since Registered",
 				Cell: ({ row }) => {
-					const oneDay = 24 * 60 * 60 * 1000;
 					const today = new Date();
 					const registeredDate = new Date(row.original.registeredDate);
-					const diffDays = Math.round(Math.abs((today.getTime() - registeredDate.getTime()) / oneDay));
-					return diffDays;
+					return getDiffInDays(today, registeredDate);
 				},
 				sortingFn: sortingDate,
 			},

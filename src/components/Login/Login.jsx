@@ -5,7 +5,7 @@ import "./Login.css";
 
 export const Login = ({ onClose }) => {
 	const { isLoginOpen, setIsLoggedIn } = useContext(LoginContext);
-	const [error, setError] = useState("");
+	const [, setError] = useState("");
 
 	const onSubmit = async (values) => {
 		try {
