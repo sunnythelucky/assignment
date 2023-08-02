@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useEffect, useRef, useState } from "react";
-import axios, { AxiosError } from "axios";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LoginContext } from "../../context/LoginProvider";
 import { Modal } from "../Modal/Modal";
@@ -22,6 +21,13 @@ export const Login = ({ onClose }) => {
 			setError(error.response.data.message);
 		}
 	};
+	const formik = useFormik({
+		initialValues: {
+			username: "",
+			password: "",
+		},
+		onSubmit,
+	});
 
 	return (
 		<Modal open={isLoginOpen} onClose={onClose}>

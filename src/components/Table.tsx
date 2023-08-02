@@ -13,7 +13,6 @@ import LoginButton from "./Login/LoginButton";
 
 const Table = () => {
 	const [isSaved, setISSaved] = useState(false);
-
 	const [columnOrder, setColumnOrder] = useState([
 		"firstName",
 		"lastName",
