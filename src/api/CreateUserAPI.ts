@@ -20,4 +20,12 @@ const createUser = (): User => {
 	};
 };
 
-export const data = faker.helpers.multiple(createUser, { count: 500 });
+export const createUserData = () => {
+	const data = faker.helpers.multiple(createUser, { count: 500 });
+	localStorage.setItem("users", JSON.stringify(data));
+};
+
+export const loadUserData = () => {
+	const savedData = localStorage.getItem("users");
+	return savedData ? JSON.parse(savedData) : null;
+};

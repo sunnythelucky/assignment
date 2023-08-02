@@ -2,8 +2,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 
 import { Button } from "@mui/material";
-
-import { data } from "../../api/CreateUserAPI";
+import { createUserData, loadUserData } from "../../api/CreateUserAPI";
 import { User } from "../../utils/types";
 import { sortingDate, getDiffInDays } from "../../utils/sort";
 
@@ -12,7 +11,8 @@ import { LoginContext } from "../../context/LoginProvider";
 import LoginButton from "../Login/LoginButton";
 
 const Table = () => {
-	const [isSaved, setISSaved] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
+	const [data] = useState<User[]>(loadUserData() || createUserData());
 	const [, setColumnOrder] = useState(["firstName", "lastName", "city", "email", "registeredDate", "fullName", "dsr"]);
 	const {
 		setIsLoginOpen,
@@ -94,7 +94,7 @@ const Table = () => {
 						<Button
 							onClick={() => {
 								table.resetColumnOrder(false);
-								setISSaved(false);
+								setIsSaved(false);
 							}}
 							disabled={!isLoggedIn}
 						>
@@ -102,7 +102,7 @@ const Table = () => {
 						</Button>
 						<Button
 							onClick={() => {
-								setISSaved(true);
+								setIsSaved(true);
 								setColumnOrder(table.getState().columnOrder);
 							}}
 							disabled={!isLoggedIn}
