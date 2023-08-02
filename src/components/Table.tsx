@@ -25,6 +25,7 @@ const Table = () => {
 
 	const {
 		setIsLoginOpen,
+		isLoggedIn,
 	}: {
 		setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>;
 		isLoggedIn: boolean;
@@ -106,14 +107,16 @@ const Table = () => {
 								table.resetColumnOrder(false);
 								setISSaved(false);
 							}}
+							disabled={!isLoggedIn}
 						>
-							Reset Order
+							Reload
 						</Button>
 						<Button
 							onClick={() => {
 								setISSaved(true);
 								setColumnOrder(table.getState().columnOrder);
 							}}
+							disabled={!isLoggedIn}
 						>
 							Save Order
 						</Button>

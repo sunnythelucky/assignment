@@ -20,7 +20,7 @@ const LoginButton = () => {
 	return isLoggedIn ? (
 		<Button onClick={logout}>Logout</Button>
 	) : (
-		<Button onClick={() => setIsLoginOpen(true)}>Login</Button>
+		<Button onClick={() => setIsLoginOpen(true)}>Login to try save column feature</Button>
 	);
 };
 

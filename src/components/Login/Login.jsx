@@ -1,17 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
 import { LoginContext } from "../../context/LoginProvider";
 import { Modal } from "../Modal/Modal";
 import "./Login.css";
 
 export const Login = ({ onClose }) => {
-	const { isLoginOpen, isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+	const { isLoginOpen, setIsLoggedIn } = useContext(LoginContext);
 	const [error, setError] = useState("");
-
-	const form = useForm();
 
 	const onSubmit = async (values) => {
 		try {
