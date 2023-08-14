@@ -25,7 +25,7 @@ export const Login = ({ onClose }) => {
 						<form onSubmit={onSubmit}>
 							<input type="username" name="username" placeholder="Username" required />
 							<input type="password" name="password" placeholder="Password" required />
-							<button type="submit" className="btn btn-primary">
+							<button type="submit" className="login-button">
 								Login
 							</button>
 						</form>

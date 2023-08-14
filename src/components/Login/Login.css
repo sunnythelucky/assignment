@@ -6,7 +6,6 @@ form {
 }
 input,
 textarea {
-	width: 100%;
 	padding: 1.5rem;
 	border-radius: 0.5rem;
 	background: transparent;
@@ -31,6 +30,11 @@ textarea {
 		width: var(--container-width-sm);
 		grid-template-columns: 1fr;
 		gap: 2rem;
+	}
+	input,
+	textarea {
+		width: 85%;
+		padding: 1.5rem 1.5rem;
 	}
 }
 
@@ -136,4 +140,8 @@ center {
 
 .line {
 	display: inline-block;
+}
+
+.login-button {
+	width: 100%;
 }
