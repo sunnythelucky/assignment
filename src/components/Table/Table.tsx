@@ -8,7 +8,7 @@ import { sortingDate, getDiffInDays } from "../../utils/sort";
 
 import { Login } from "../Login/Login";
 import { LoginContext } from "../../context/LoginProvider";
-import LoginButton from "./LoginButton";
+import LoginButton from "../Login/LoginButton";
 
 const Table = () => {
 	const [isSaved, setIsSaved] = useState(false);
