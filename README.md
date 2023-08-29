@@ -1,4 +1,4 @@
-# Thrive Assignment
+# Assignment
 
 This project was to build a data table using TypeScript and React. The application displays a table with data, allowing users to interact with the table columns, sort data, and optionally save/load column orders.
 
